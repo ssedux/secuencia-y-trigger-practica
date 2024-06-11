@@ -1,0 +1,42 @@
+CREATE TABLE departamentos (
+departamento_id NUMBER PRIMARY KEY,
+nombre VARCHAR2 (50)
+);
+CREATE TABLE empleados (
+empleado_id NUMBER PRIMARY KEY,
+nombre VARCHAR2(50),
+correo VARCHAR2 (100),
+departamento_id NUMBER
+);
+ALTER TABLE EMPLEADOS
+ADD CONSTRAINT fk_departamento
+FOREIGN KEY (DEPARTAMENTO_ID)
+REFERENCES DEPARTAMENTOS (DEPARTAMENTO_ID)
+
+CREATE SEQUENCE depa
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TRIGGER TrigDEPA
+BEFORE INSERT ON DEPARTAMENTOS
+for EACH ROW
+BEGIN
+SELECT depa.NEXTVAL INTO : NEW.DEPARTAMENTO_ID from DUAL;
+END;
+
+CREATE SEQUENCE empl
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TRIGGER trigEMPL
+BEFORE INSERT ON EMPLEADOS
+for EACH ROW
+BEGIN
+SELECT empl.NEXTVAL INTO : NEW.EMPLEADO_ID from DUAL;
+END;
+
+select * from departamentos
+select * from empleados
+
+INSERT INTO departamentos (departamento_id, nombre) VALUES (depa.NEXTVAL, 'Ventas');
+INSERT INTO empleados (empleado_id, nombre, correo, departamento_id) VALUES (empl.NEXTVAL, 'Christhian Sanchez', 'christhiansanchez2409@gmail.com',2 );
